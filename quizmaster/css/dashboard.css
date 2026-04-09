@@ -1,0 +1,58 @@
+/* ============================================================
+   dashboard.css — Dashboard & Stats Styles
+   QuizMaster Pro
+   ============================================================ */
+
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.stat-card {
+  background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: var(--radius);
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.stat-card.gold::before   { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.stat-card.blue::before   { background: linear-gradient(90deg, var(--ind), var(--ind3)); }
+.stat-card.green::before  { background: linear-gradient(90deg, var(--grn), #34d399); }
+.stat-card.orange::before { background: linear-gradient(90deg, var(--ora), #fbbf24); }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+
+.stat-icon  { font-size: 26px; margin-bottom: 13px; }
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.stat-label { font-size: 12.5px; color: var(--tx2); }
+
+.stat-card.gold   .stat-value { color: var(--gold); }
+.stat-card.blue   .stat-value { color: var(--ind2); }
+.stat-card.green  .stat-value { color: var(--grn); }
+.stat-card.orange .stat-value { color: var(--ora); }
+
+/* PERFORMANCE BARS */
+.perf-item { margin-bottom: 14px; }
+.perf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.perf-title  { font-size: 13px; color: var(--tx); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.perf-stats  { font-size: 11.5px; color: var(--tx3); white-space: nowrap; margin-left: 8px; }

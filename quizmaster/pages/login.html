@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster Pro — Login</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg); }
+    .auth-box {
+      width: 100%; max-width: 420px;
+      background: var(--surf); border: 1px solid var(--bdr);
+      border-radius: 16px; padding: 40px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.5);
+    }
+    .auth-logo { display:flex; align-items:center; gap:11px; justify-content:center; margin-bottom:28px; }
+    .auth-mark {
+      width:44px; height:44px;
+      background:linear-gradient(135deg,var(--ind),#7c3aed);
+      border-radius:12px; display:flex; align-items:center;
+      justify-content:center; font-size:22px; font-weight:800; color:#fff;
+    }
+    .auth-title { font-family:var(--font-display); font-size:20px; font-weight:700; }
+    .auth-sub   { font-size:10px; color:var(--tx3); letter-spacing:2px; text-transform:uppercase; }
+    .page-title { font-family:var(--font-display); font-size:22px; font-weight:600; text-align:center; margin-bottom:6px; }
+    .page-sub   { color:var(--tx2); font-size:13px; text-align:center; margin-bottom:28px; }
+    .divider-text {
+      text-align:center; font-size:12px; color:var(--tx3);
+      position:relative; margin:20px 0;
+    }
+    .divider-text::before, .divider-text::after {
+      content:''; position:absolute; top:50%; width:42%; height:1px;
+      background:var(--bdr);
+    }
+    .divider-text::before { left:0; }
+    .divider-text::after  { right:0; }
+    .auth-footer { text-align:center; margin-top:20px; font-size:13px; color:var(--tx2); }
+    .auth-footer a { color:var(--ind2); }
+    .auth-footer a:hover { text-decoration:underline; }
+    .demo-box {
+      background:rgba(99,102,241,.08); border:1px solid rgba(99,102,241,.25);
+      border-radius:8px; padding:12px 14px; font-size:12.5px; color:var(--tx2);
+      margin-bottom:22px;
+    }
+    .demo-box strong { color:var(--ind2); }
+  </style>
+</head>
+<body>
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-mark">Q</div>
+      <div>
+        <div class="auth-title">QuizMaster</div>
+        <div class="auth-sub">Pro v2.0</div>
+      </div>
+    </div>
+
+    <div class="page-title">Welcome back</div>
+    <div class="page-sub">Sign in to your account</div>
+
+    <div class="demo-box">
+      🔑 Demo admin: <strong>admin@quizmaster.pro</strong> / <strong>admin123</strong>
+    </div>
+
+    <div id="loginError" class="error-box" style="display:none"></div>
+
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;margin-top:4px" id="loginBtn" onclick="doLogin()">
+      Sign In
+    </button>
+
+    <div class="divider-text">or</div>
+
+    <button class="btn btn-secondary" style="width:100%;padding:12px;font-size:14px" onclick="window.location.href='register.html'">
+      Create a new account
+    </button>
+
+    <div class="auth-footer">
+      <a href="../index.html">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script>
+    // If already logged in, go to dashboard
+    if (Auth.isLoggedIn()) window.location.href = "../index.html";
+
+    document.addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+
+    async function doLogin() {
+      const email    = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+      const errEl    = document.getElementById("loginError");
+      const btn      = document.getElementById("loginBtn");
+
+      errEl.style.display = "none";
+      if (!email || !password) {
+        errEl.textContent  = "⚠ Please enter your email and password.";
+        errEl.style.display = "block";
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = "Signing in…";
+
+      try {
+        await Auth.login(email, password);
+        window.location.href = "../index.html";
+      } catch (err) {
+        errEl.textContent    = "⚠ " + err.message;
+        errEl.style.display  = "block";
+        btn.disabled         = false;
+        btn.textContent      = "Sign In";
+      }
+    }
+  </script>
+</body>
+</html>

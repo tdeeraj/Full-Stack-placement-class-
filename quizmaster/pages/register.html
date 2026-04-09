@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster Pro — Register</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg); }
+    .auth-box {
+      width:100%; max-width:420px;
+      background:var(--surf); border:1px solid var(--bdr);
+      border-radius:16px; padding:40px;
+      box-shadow:0 24px 60px rgba(0,0,0,.5);
+    }
+    .auth-logo { display:flex; align-items:center; gap:11px; justify-content:center; margin-bottom:28px; }
+    .auth-mark {
+      width:44px; height:44px;
+      background:linear-gradient(135deg,var(--ind),#7c3aed);
+      border-radius:12px; display:flex; align-items:center;
+      justify-content:center; font-size:22px; font-weight:800; color:#fff;
+    }
+    .auth-title { font-family:var(--font-display); font-size:20px; font-weight:700; }
+    .auth-sub   { font-size:10px; color:var(--tx3); letter-spacing:2px; text-transform:uppercase; }
+    .page-title { font-family:var(--font-display); font-size:22px; font-weight:600; text-align:center; margin-bottom:6px; }
+    .page-sub   { color:var(--tx2); font-size:13px; text-align:center; margin-bottom:28px; }
+    .auth-footer { text-align:center; margin-top:20px; font-size:13px; color:var(--tx2); }
+    .auth-footer a { color:var(--ind2); }
+    .auth-footer a:hover { text-decoration:underline; }
+    .hint { font-size:11.5px; color:var(--tx3); margin-top:5px; }
+  </style>
+</head>
+<body>
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-mark">Q</div>
+      <div>
+        <div class="auth-title">QuizMaster</div>
+        <div class="auth-sub">Pro v2.0</div>
+      </div>
+    </div>
+
+    <div class="page-title">Create account</div>
+    <div class="page-sub">Join QuizMaster Pro today</div>
+
+    <div id="regError"   class="error-box"   style="display:none"></div>
+    <div id="regSuccess" class="success-box" style="display:none"></div>
+
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" id="regName" type="text" placeholder="e.g. John Smith" autocomplete="name"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" id="regEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="regPassword" type="password" placeholder="Min. 6 characters" autocomplete="new-password"/>
+      <div class="hint">Must be at least 6 characters.</div>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;margin-top:4px" id="regBtn" onclick="doRegister()">
+      Create Account
+    </button>
+
+    <div class="auth-footer">
+      Already have an account? <a href="login.html">Sign in</a>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script>
+    if (Auth.isLoggedIn()) window.location.href = "../index.html";
+
+    document.addEventListener("keydown", e => { if (e.key === "Enter") doRegister(); });
+
+    async function doRegister() {
+      const name     = document.getElementById("regName").value.trim();
+      const email    = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+      const errEl    = document.getElementById("regError");
+      const okEl     = document.getElementById("regSuccess");
+      const btn      = document.getElementById("regBtn");
+
+      errEl.style.display = "none";
+      okEl.style.display  = "none";
+
+      if (!name)             { showErr("Full name is required."); return; }
+      if (!email)            { showErr("Email address is required."); return; }
+      if (password.length < 6) { showErr("Password must be at least 6 characters."); return; }
+
+      btn.disabled    = true;
+      btn.textContent = "Creating account…";
+
+      try {
+        await Auth.register(name, email, password);
+        okEl.textContent   = "✓ Account created! Redirecting…";
+        okEl.style.display = "block";
+        setTimeout(() => window.location.href = "../index.html", 1200);
+      } catch (err) {
+        showErr(err.message);
+        btn.disabled    = false;
+        btn.textContent = "Create Account";
+      }
+    }
+
+    function showErr(msg) {
+      const el = document.getElementById("regError");
+      el.textContent   = "⚠ " + msg;
+      el.style.display = "block";
+    }
+  </script>
+</body>
+</html>

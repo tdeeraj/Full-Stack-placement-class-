@@ -1,0 +1,153 @@
+/* ============================================================
+   admin.css — Admin Panel: Quiz Editor, Results, Settings
+   QuizMaster Pro
+   ============================================================ */
+
+/* ── QUESTION EDITOR ── */
+.q-editor {
+  background: var(--bg);
+  border: 1px solid var(--bdr);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.q-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.q-number {
+  font-size: 11px;
+  color: var(--tx3);
+  font-family: var(--font-mono);
+}
+.q-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.q-option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.q-option-row input[type="radio"] {
+  cursor: pointer;
+  accent-color: var(--grn);
+  flex-shrink: 0;
+  width: 16px; height: 16px;
+}
+.q-correct-hint { font-size: 11px; color: var(--tx3); margin-top: 7px; }
+.q-correct-mark { font-size: 11px; color: var(--grn); flex-shrink: 0; }
+
+/* ── RESULTS TABLE ── */
+.results-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* ── SETTINGS ── */
+.settings-wrap { max-width: 600px; }
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surf2);
+  border: 1px solid var(--bdr);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.toggle-info .toggle-title { font-weight: 600; font-size: 14px; }
+.toggle-info .toggle-sub   { font-size: 12px; color: var(--tx3); margin-top: 4px; }
+
+/* TOGGLE SWITCH */
+.toggle-switch { position: relative; width: 44px; height: 24px; cursor: pointer; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: var(--bdr2);
+  transition: background .2s;
+}
+.toggle-switch input:checked + .toggle-track { background: var(--ind); }
+.toggle-thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: white;
+  transition: left .2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  pointer-events: none;
+}
+.toggle-switch input:checked ~ .toggle-thumb { left: 22px; }
+
+.cert-info-box {
+  background: rgba(240,180,41,.07);
+  border: 1px solid rgba(240,180,41,.22);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--gold);
+  margin-top: 16px;
+}
+
+/* ── QUIZ FILTER BAR ── */
+.quiz-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* ── POINTS INPUT ── */
+.pts-input {
+  width: 58px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: var(--bg);
+  border: 1px solid var(--bdr);
+  border-radius: 6px;
+  color: var(--tx);
+  font-family: var(--font);
+  outline: none;
+}
+.pts-input:focus { border-color: var(--ind); }
+
+/* ── SCORE GRADE BADGES ── */
+.grade-A\+ { background: rgba(16,185,129,.13); color: var(--grn); border: 1px solid rgba(16,185,129,.3); }
+.grade-A   { background: rgba(16,185,129,.13); color: var(--grn); border: 1px solid rgba(16,185,129,.3); }
+.grade-B   { background: rgba(99,102,241,.13);  color: var(--ind2); border: 1px solid rgba(99,102,241,.3); }
+.grade-C   { background: rgba(245,158,11,.13);  color: var(--ora);  border: 1px solid rgba(245,158,11,.3); }
+.grade-F   { background: rgba(239,68,68,.13);   color: var(--red);  border: 1px solid rgba(239,68,68,.3); }
+
+/* ── CERTIFICATES GRID ── */
+.cert-card {
+  background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all .25s;
+}
+.cert-card:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+.cert-card-icon  { font-size: 36px; margin-bottom: 12px; }
+.cert-card-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+.cert-card-name  { font-size: 13px; color: var(--tx2); margin-bottom: 8px; }
+.cert-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}

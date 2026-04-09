@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster Pro — Manage Quizzes</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <link rel="stylesheet" href="../css/sidebar.css"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-mark">Q</div>
+      <div><div class="sb-name">QuizMaster</div><div class="sb-sub">PRO v2.0</div></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section-label">Student</div>
+      <a href="../index.html"       class="nav-item"><span class="nav-ico">⬡</span>Dashboard</a>
+      <a href="take-quiz.html"      class="nav-item"><span class="nav-ico">▶</span>Take a Quiz</a>
+      <a href="certificates.html"   class="nav-item"><span class="nav-ico">❋</span>My Certificates</a>
+      <div class="sb-section-label admin-only">Admin</div>
+      <a href="manage-quizzes.html" class="nav-item active admin-only"><span class="nav-ico">◈</span>Manage Quizzes</a>
+      <a href="results.html"        class="nav-item admin-only"><span class="nav-ico">◎</span>Results</a>
+      <a href="settings.html"       class="nav-item admin-only"><span class="nav-ico">⚙</span>Settings</a>
+    </nav>
+    <div class="sb-footer">
+      <div class="user-row">
+        <div class="avatar">A</div>
+        <div>
+          <div class="user-name">Admin User</div>
+          <div class="user-role" id="roleToggle">→ Switch to Student</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title">Manage Quizzes</div>
+      <div class="topbar-right">
+        <button class="btn btn-primary btn-sm" onclick="openEditor(null)">✦ New Quiz</button>
+        <span class="badge badge-blue" id="roleBadge">👑 Admin</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="quiz-filter-bar">
+        <div class="tabs" id="filterTabs">
+          <button class="tab active" data-filter="all"       onclick="setFilter('all',this)">All</button>
+          <button class="tab"        data-filter="published" onclick="setFilter('published',this)">Published</button>
+          <button class="tab"        data-filter="draft"     onclick="setFilter('draft',this)">Draft</button>
+        </div>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input id="searchInput" placeholder="Search quizzes…" oninput="renderGrid()"/>
+        </div>
+      </div>
+      <div class="quiz-grid" id="quizGrid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- QUIZ EDITOR MODAL -->
+<div class="modal-overlay" id="editorModal">
+  <div class="modal" style="max-width:780px">
+    <div class="modal-header">
+      <div class="modal-title" id="editorTitle">✦ Create New Quiz</div>
+      <button class="close-btn" onclick="closeEditor()">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="editorError" class="error-box" style="display:none"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Quiz Title *</label>
+          <input class="form-input" id="fTitle" placeholder="e.g. JavaScript Basics"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="fCategory">
+            <option>Programming</option><option>Design</option><option>Backend</option>
+            <option>Science</option><option>Math</option><option>History</option>
+            <option>Language</option><option>General</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Duration (minutes)</label>
+          <input class="form-input" id="fDuration" type="number" min="1" max="180" value="20"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Passing Score (%)</label>
+          <input class="form-input" id="fPassScore" type="number" min="1" max="100" value="70"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-input" id="fStatus">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <span style="font-weight:600;font-size:15px">Questions (<span id="qCount">0</span>)</span>
+        <button class="btn btn-secondary btn-sm" onclick="addQuestion()">+ Add Question</button>
+      </div>
+      <div id="questionsContainer">
+        <div class="empty-state" style="padding:28px"><div class="empty-icon">❓</div>Click "+ Add Question" to start building your quiz.</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeEditor()">Cancel</button>
+      <button class="btn btn-primary"   onclick="saveQuiz()">💾 Save Quiz</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/manage-quizzes.js"></script>
+</body>
+</html>
